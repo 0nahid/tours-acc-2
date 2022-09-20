@@ -28,6 +28,15 @@ const TourSchema = new Schema(
         message: "{VALUE} is not an integer value",
       },
     },
+    maxGroupSize: {
+      type: Number,
+      required: true,
+      minLength: [0, "Max group size cannot be less than 0"],
+      validate: {
+        validator: Number.isInteger,
+        message: "{VALUE} is not an integer value",
+      },
+    },
     status: {
       type: String,
       required: true,
