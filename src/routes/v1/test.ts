@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { testRouter } from "../../controllers/test";
+import { toursRouter } from "../../controllers/tours.controller";
 
 const router: Router = Router();
 
-// @route  get api/v1/test
-router.route("/").get(testRouter.getAllTest).post(testRouter.createTest);
+// @route  post api/v1/tours
+router.route("/").post(toursRouter.createTour);
 
 export default router;
