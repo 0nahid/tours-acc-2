@@ -1,6 +1,4 @@
 > # Welcome to Tour Api
->
-> `Product Schema `
 
 `// Info for POST endpoints`
 
