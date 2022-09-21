@@ -8,6 +8,7 @@ const app: Application = express();
 /* middleware  */
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 /* here will be all the imports routes */
 
@@ -21,7 +22,7 @@ app.get("/", (req: Request, res: Response) => {
 
 /* Here is the User Routes */
 app.use("/api/v1/test", testRoute);
-app.use("/api/v1/tour", toursRouter);
+app.use("/api/v1/", toursRouter);
 
 // 404 response
 app.all("*", (req: Request, res: Response) => {

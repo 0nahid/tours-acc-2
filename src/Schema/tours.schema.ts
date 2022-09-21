@@ -22,11 +22,16 @@ const TourSchema = new Schema(
     duration: {
       type: Number,
       required: true,
-      minLength: [0, "Duration cannot be less than 0"],
+      min: [0, "Duration cannot be less than 0"],
+      max: [23, "Duration cannot be more than 23"],
       validate: {
         validator: Number.isInteger,
         message: "{VALUE} is not an integer value",
       },
+    },
+    view: {
+      type: Number,
+      default: 0,
     },
     maxGroupSize: {
       type: Number,
