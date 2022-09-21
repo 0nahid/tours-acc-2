@@ -9,6 +9,8 @@ router
   .post(toursRouter.createTour)
   .get(toursRouter.GetAllTours);
 
+router.route("/tour/trending").get(toursRouter.getTrendingTours);
+
 router.route("/tours/:id").get(ViewCount, toursRouter.GetTourById);
 
 router.route("/tour/:id").patch(toursRouter.updateTourById);

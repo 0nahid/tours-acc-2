@@ -74,9 +74,30 @@ const updateTourById = async (req: Request, res: Response) => {
   }
 };
 
+const getTrendingTours = async (req: Request, res: Response) => {
+  try {
+    const tours = await TourModel.find().sort({ view: -1 }).limit(3);
+    res.status(200).json({
+      status: "success",
+      message:'Trending tours',
+      results: tours.length,
+      data: {
+        tours,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
+
+
 export const toursRouter = {
   createTour,
   GetAllTours,
   GetTourById,
   updateTourById,
+  getTrendingTours
 };
