@@ -1,6 +1,14 @@
 import { Request, Response } from "express";
 import { TourModel } from "../models/tours.model";
 
+interface queries {
+  sortBy?: string;
+  limit?: number;
+  page?: number;
+  fields?: string;
+  skip?: number;
+}
+
 // post data
 const createTour = async (req: Request, res: Response) => {
   const tour = new TourModel(req.body);
@@ -20,8 +28,41 @@ const createTour = async (req: Request, res: Response) => {
   }
 };
 const GetAllTours = async (req: Request, res: Response) => {
+  let filters = { ...req.query };
+  // operators
+  let queryStr = JSON.stringify(filters);
+  queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`);
+  // console.log(JSON.parse(queryStr));
+  filters = JSON.parse(queryStr);
+  // exclude the page and limit from the query
+  const excludedFields = ["page", "limit", "sort"];
+  excludedFields.forEach((field) => delete filters[field]);
+  // build the query
+  let queries: queries = {};
+  if (req.query.sort) {
+    const sortBy = req.query.sort.toString().split(",").join(" ");
+    queries.sortBy = sortBy;
+  }
+  // console.log(queries.sortBy);
+  if (req.query.fields) {
+    const fields = req.query.fields.toString().split(",").join(" ");
+    queries.fields = fields;
+  }
+  // pagination logic
+  const { page, limit } = req.query;
+  const pageNumber = parseInt(page as string, 10) || 1;
+  const limitNumber = parseInt(limit as string, 10) || 10;
+  const skip = (pageNumber - 1) * limitNumber;
+  queries.skip = skip;
+  queries.limit = limitNumber;
+  // console.log(queries);
+
   try {
-    const tours = await TourModel.find();
+    const tours = await TourModel.find({ ...filters })
+      .skip(queries.skip)
+      .limit(queries.limit)
+      .sort(queries.sortBy)
+      .select(queries.fields);
     res.status(200).json({
       status: "success",
       results: tours.length,
