@@ -54,4 +54,29 @@ const GetTourById = async (req: Request, res: Response) => {
   }
 };
 
-export const toursRouter = { createTour, GetAllTours,GetTourById };
+const updateTourById = async (req: Request, res: Response) => {
+  try {
+    const tour = await TourModel.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    res.status(200).json({
+      status: "success",
+      data: {
+        tour,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
+
+export const toursRouter = {
+  createTour,
+  GetAllTours,
+  GetTourById,
+  updateTourById,
+};
