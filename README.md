@@ -8,13 +8,32 @@
 {
     name: String,
     description: String,
+    imageUrl: String,
     price: Number,
     duration: Number,
+    view: Number,
     maxGroupSize: Number,
     status: String,
 
 }
 ```
+
+> Dummy Data for POST
+
+```
+{
+  "name": " Dummy Data ",
+  "description": "This is a dummy description",
+  "price": 11,
+  "duration": 3,
+  "maxGroupSize": 5,
+  "status": "available",
+  "view": 5,
+  "imageUrl": "https://images.unsplash.com/photo-1570125909517-53cb21c89ff2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+}
+```
+
+> Get api end points
 
 ```
 http://localhost:5000/api/v1/tours
