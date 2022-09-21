@@ -79,7 +79,7 @@ const getTrendingTours = async (req: Request, res: Response) => {
     const tours = await TourModel.find().sort({ view: -1 }).limit(3);
     res.status(200).json({
       status: "success",
-      message:'Trending tours',
+      message: "Trending tours",
       results: tours.length,
       data: {
         tours,
@@ -93,11 +93,30 @@ const getTrendingTours = async (req: Request, res: Response) => {
   }
 };
 
+const getCheapestTours = async (req: Request, res: Response) => {
+  try {
+    const tours = await TourModel.find().sort({ price: 1 }).limit(3);
+    res.status(200).json({
+      status: "success",
+      message: "Cheapest tours",
+      results: tours.length,
+      data: {
+        tours,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
 
 export const toursRouter = {
   createTour,
   GetAllTours,
   GetTourById,
   updateTourById,
-  getTrendingTours
+  getTrendingTours,
+  getCheapestTours,
 };

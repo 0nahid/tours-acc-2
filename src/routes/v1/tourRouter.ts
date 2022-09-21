@@ -10,6 +10,7 @@ router
   .get(toursRouter.GetAllTours);
 
 router.route("/tour/trending").get(toursRouter.getTrendingTours);
+router.route("/tour/cheapest").get(toursRouter.getCheapestTours);
 
 router.route("/tours/:id").get(ViewCount, toursRouter.GetTourById);
 
